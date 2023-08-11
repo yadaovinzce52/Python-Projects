@@ -36,9 +36,9 @@ def check_resources(coffee_type):
     if coffee_type not in MENU:
         return 'That is not on our menu, try again'
 
-    for key, val in MENU[coffee_type]['ingredients'].items():
-        if resources[key] < val:
-            return f'Sorry there is not enough {key.lower()}'
+    for k, v in MENU[coffee_type]['ingredients'].items():
+        if resources[k] < v:
+            return f'Sorry there is not enough {k.lower()}'
 
 
 while True:
