@@ -7,17 +7,13 @@ coffee_maker = CoffeeMaker()
 register = MoneyMachine()
 
 
-def reports():
-    coffee_maker.report()
-    register.report()
-
-
 while True:
     choice = input(f'What would you like? ({menu.get_items()}): ').lower()
     if choice == 'off':
         break
     elif choice == 'report':
-        reports()
+        coffee_maker.report()
+        register.report()
     elif choice in menu.get_items().split('/'):
         drink = menu.find_drink(choice)
         if coffee_maker.is_resource_sufficient(drink):
