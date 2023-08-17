@@ -1,5 +1,6 @@
 from snake import Snake
 from turtle import Screen
+from food import Food
 import time
 
 # Setup window
@@ -12,6 +13,8 @@ screen.listen()
 
 # Create Snake object
 snake = Snake()
+food = Food()
+
 screen.onkey(key="Up", fun=snake.up)
 screen.onkey(key="Down", fun=snake.down)
 screen.onkey(key="Left", fun=snake.left)
