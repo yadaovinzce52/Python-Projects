@@ -42,7 +42,7 @@ class Snake:
             self.head.setheading(RIGHT)
 
     def extend(self):
-        self.add_tail(self.snake[-1].position())
+        self.add_tail(self.snake[-1].position()
 
     def add_tail(self, start):
         t1 = Turtle("square")
