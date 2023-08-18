@@ -1,7 +1,7 @@
 from turtle import Turtle
 
 ALIGN = "center"
-FONT = ("Courier", 12, "normal"
+FONT = ("Courier", 12, "normal")
 GAME_OVER = ("Courier", 24, "bold")
 
 
