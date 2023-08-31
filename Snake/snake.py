@@ -50,3 +50,10 @@ class Snake:
         t1.penup()
         t1.goto(start)
         self.snake.append(t1)
+
+    def reset(self):
+        for part in self.snake:
+            part.goto(100, 1000)
+        self.snake.clear()
+        self.create_snake()
+        self.head = self.snake[0]
