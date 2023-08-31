@@ -40,13 +40,13 @@ while game_on:
             snake.head.xcor() < -280 or
             snake.head.ycor() > 280 or
             snake.head.ycor() < -280):
-            scoreboard.reset()
-            snake.reset()
+        scoreboard.reset()
+        snake.reset()
 
     # collision with self
     for part in snake.snake[1:]:
         if snake.head.distance(part) < 10:
-            game_on = not game_on
-            scoreboard.game_over()
+            scoreboard.reset()
+            snake.reset()
 
 screen.exitonclick()
