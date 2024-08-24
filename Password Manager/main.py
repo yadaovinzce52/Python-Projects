@@ -1,7 +1,25 @@
+from json import JSONDecodeError
 from tkinter import *
 from tkinter import messagebox
 from random import *
 import pyperclip
+import json
+
+
+# ------------------------------- SEARCH ENTRY ---------------------------------- #
+def search():
+    site_search = web_entry.get()
+    try:
+        with open('data.json', 'r') as file:
+            data = json.load(file)
+        user = data[site_search]['email']
+        password = data[site_search]['password']
+    except FileNotFoundError:
+        messagebox.showinfo(title='File not Found', message='No Data File Found')
+    except KeyError:
+        messagebox.showinfo(title='No login for Website', message='No details for the website exists.')
+    else:
+        messagebox.showinfo(title=f'{site_search}', message=f'Email: {user}\nPassword: {password}!')
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -37,17 +55,27 @@ def add():
     web = web_entry.get()
     user = user_entry.get()
     password = pass_entry.get()
+    new_data = {
+        web: {
+           'email': user,
+           'password': password,
+        }
+    }
 
     if not web or not password:
         messagebox.showinfo(title='Missing Information', message='Please fill in website or password')
     else:
-        ok = messagebox.askokcancel(title=web_entry.get(), message=f'These are the details entered: \nEmail: '
-                                                                   f'{user}\nPassword: {password}\nIs it ok to save?')
-
-        if ok:
-            with open('data.txt', 'a') as file:
-                file.writelines(f'{web} | {user} | {password}\n')
-
+        try:
+            with open('data.json', 'r') as file:
+                data = json.load(file)
+                data.update(new_data)
+        except FileNotFoundError:
+            with open('data.json', 'w') as file:
+                json.dump(new_data, file, indent=4)
+        else:
+            with open('data.json', 'w') as file:
+                json.dump(data, file, indent=4)
+        finally:
             web_entry.delete(0, END)
             pass_entry.delete(0, END)
 
@@ -71,19 +99,21 @@ pass_label = Label(text='Password:')
 pass_label.grid(row=3, column=0)
 
 # Entries
-web_entry = Entry(width=43)
-web_entry.grid(row=1, column=1, columnspan=2)
+web_entry = Entry(width=30)
+web_entry.grid(row=1, column=1)
 web_entry.focus()
-user_entry = Entry(width=43)
+user_entry = Entry(width=50)
 user_entry.grid(row=2, column=1, columnspan=2)
 user_entry.insert(0, 'yadaovinzce@gmail.com')
-pass_entry = Entry(width=24)
+pass_entry = Entry(width=30)
 pass_entry.grid(row=3, column=1)
 
 # Buttons
+search = Button(text='Search', command=search, width=15)
+search.grid(row=1, column=2)
 generate = Button(text='Generate Password', command=generate)
 generate.grid(row=3, column=2)
-add = Button(text='Add', command=add, width=36)
+add = Button(text='Add', command=add, width=40)
 add.grid(row=4, column=1, columnspan=2)
 
 window.mainloop()
