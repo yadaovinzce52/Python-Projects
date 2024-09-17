@@ -11,7 +11,7 @@ APP_ID = os.environ['WT_APP_ID']
 API_KEY = os.environ['WT_API_KEY']
 
 parse_endpoint = 'https://trackapi.nutritionix.com/v2/natural/exercise'
-sheety_endpoint = os.environ['WT_SHEETY_ENDPOINT']
+sheety_endpoint = os.environ['WT_SHEETY']
 
 nutritionix_headers = {
     'x-app-id': APP_ID,
