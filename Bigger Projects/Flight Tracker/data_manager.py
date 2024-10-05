@@ -17,8 +17,8 @@ class DataManager:
 
         return [price for price in response.json()['prices']]
 
-    def update_data(self, data, iataCode):
-        endpoint = f"https://api.sheety.co/b93fdde380704f0440134416c73b171c/vinzce'sFlightDeals/prices/{data["id"]}"
+    def update_data(self, id, iataCode):
+        endpoint = f"https://api.sheety.co/b93fdde380704f0440134416c73b171c/vinzce'sFlightDeals/prices/{id}"
         body = {
             "price": {
                 "iataCode": iataCode,

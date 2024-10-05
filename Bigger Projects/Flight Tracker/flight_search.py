@@ -1,22 +1,24 @@
 import requests
 import os
 
+
 class FlightSearch:
-    #This class is responsible for talking to the Flight Search API.
+    # This class is responsible for talking to the Flight Search API.
     def __init__(self):
-        self.endpoint = "https://test.api.amadeus.com/v1/reference-data/locations/cities"
-        access_token = self.get_token()
-        self.header = {
-            "Authorization": f"Bearer {access_token}"
-       }
+        self.access_token = self.get_token()
+
 
     def get_flights(self, city):
+        endpoint = "https://test.api.amadeus.com/v1/reference-data/locations/cities"
+        header = {
+            "Authorization": f"Bearer {self.access_token}"
+        }
         params = {
             "keyword": city,
             "max": "2",
             "include": "AIRPORTS"
         }
-        response = requests.get(self.endpoint, params=params, headers=self.header)
+        response = requests.get(endpoint, params=params, headers=header)
         try:
             return response.json()["data"][0]["iataCode"]
         except IndexError:
@@ -24,7 +26,8 @@ class FlightSearch:
         except KeyError:
             return "Not Found"
 
-    def get_token(self):
+    @staticmethod
+    def get_token():
         endpoint = "https://test.api.amadeus.com/v1/security/oauth2/token"
         header = {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -37,3 +40,17 @@ class FlightSearch:
         response = requests.post(endpoint, headers=header, data=body)
 
         return response.json()["access_token"]
+
+    def get_offers(self, **kwargs):
+        endpoint = 'https://test.api.amadeus.com/v2/shopping/flight-offers'
+        header = {
+            "Authorization": f"Bearer {self.access_token}"
+        }
+        params = {key: value for key, value in kwargs.items()}
+        params['nonStop'] = 'true'
+        params['adults'] = 1
+        params['currencyCode'] = 'USD'
+        params['max'] = 10
+
+        response = requests.get(endpoint, params=params, headers=header)
+        print(response.json())
