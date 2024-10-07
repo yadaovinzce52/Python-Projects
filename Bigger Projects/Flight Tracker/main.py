@@ -32,5 +32,9 @@ for destination in sheet_data:
         originLocationCode=ORIGIN,
         destinationLocationCode=destination['iataCode'],
         departureDate=tomorrow.strftime("%Y-%m-%d"),
-        returnDate=six_month_from_today.strftime("%Y-%m-%d")
+        returnDate=six_month_from_today.strftime("%Y-%m-%d"),
+        nonStop='true',
+        adults=1,
+        currencyCode='USD',
+        max=10
     )

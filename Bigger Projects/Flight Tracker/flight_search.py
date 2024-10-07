@@ -5,13 +5,12 @@ import os
 class FlightSearch:
     # This class is responsible for talking to the Flight Search API.
     def __init__(self):
-        self.access_token = self.get_token()
-
+        pass
 
     def get_flights(self, city):
         endpoint = "https://test.api.amadeus.com/v1/reference-data/locations/cities"
         header = {
-            "Authorization": f"Bearer {self.access_token}"
+            "Authorization": f"Bearer {self.get_token()}"
         }
         params = {
             "keyword": city,
@@ -38,19 +37,15 @@ class FlightSearch:
             "client_secret": os.environ["API_SECRET"],
         }
         response = requests.post(endpoint, headers=header, data=body)
-
+        print(response.json()['access_token'])
         return response.json()["access_token"]
 
     def get_offers(self, **kwargs):
         endpoint = 'https://test.api.amadeus.com/v2/shopping/flight-offers'
         header = {
-            "Authorization": f"Bearer {self.access_token}"
+            "Authorization": f"Bearer {self.get_token()}"
         }
         params = {key: value for key, value in kwargs.items()}
-        params['nonStop'] = 'true'
-        params['adults'] = 1
-        params['currencyCode'] = 'USD'
-        params['max'] = 10
 
         response = requests.get(endpoint, params=params, headers=header)
-        print(response.json())
+        print(response.text)
