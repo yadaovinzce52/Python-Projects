@@ -1,6 +1,8 @@
 from selenium import webdriver
+from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from time import sleep
+import os
 
 
 class InternetSpeedTwitterBot:
@@ -25,9 +27,21 @@ class InternetSpeedTwitterBot:
         finally:
             self.down = self.driver.find_element(By.XPATH,'//*[@id="container"]/div[1]/div[3]/div/div/div/div[2]/div[3]/div[3]/div/div[3]/div/div/div[2]/div[1]/div[1]/div/div[2]/span').text
             self.up = self.driver.find_element(By.XPATH,'//*[@id="container"]/div[1]/div[3]/div/div/div/div[2]/div[3]/div[3]/div/div[3]/div/div/div[2]/div[1]/div[2]/div/div[2]/span').text
-            print(self.down)
-            print(self.up)
 
     def tweet_at_provider(self):
-        pass
+        twitter_email = os.getenv('EMAIL')
+        twitter_pass = os.getenv('PASSWORD')
+        message = f"Hey Internet Provider, why is my internet speed {self.down} down/{self.up} up when I pay for 1000 down/1000 up?"
 
+        self.driver.get('https://x.com/i/flow/login')
+        sleep(5)
+        phone = self.driver.find_element(By.NAME, 'text')
+        phone.send_keys(twitter_email, Keys.ENTER)
+        sleep(1)
+        password = self.driver.find_element(By.NAME, 'password')
+        password.send_keys(twitter_pass, Keys.ENTER)
+        sleep(5)
+        post = self.driver.find_element(By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[3]/div/div[2]/div[1]/div/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div/div/div/div[1]/div/div/div/div/div/div[2]/div/div/div/div')
+        post.send_keys(message)
+        post = self.driver.find_element(By.XPATH, '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[3]/div/div[2]/div[1]/div/div/div/div[2]/div[2]/div[2]/div/div/div/button')
+        post.click()
