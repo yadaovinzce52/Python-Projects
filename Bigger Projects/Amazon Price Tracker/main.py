@@ -21,7 +21,7 @@ header = {
     "Sec-Fetch-Site": "none",
     "Sec-Fetch-User": "?1",
     "Sec-Gpc": "1",
-    "Upgrade-Insecure-Requests": "1",
+    "Upgrade-Insecure-APIs": "1",
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:126.0) Gecko/20100101 Firefox/126.0",
 }
 

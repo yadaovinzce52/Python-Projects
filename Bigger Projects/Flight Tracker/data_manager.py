@@ -7,7 +7,7 @@ class DataManager:
     def __init__(self):
         self.endpoint = "https://api.sheety.co/b93fdde380704f0440134416c73b171c/vinzce'sFlightDeals/prices"
         self.headers = {
-            "Authorization": f"Bearer {os.environ["AUTHORIZATION"]}",
+            "Authorization": f"Bearer {os.getenv("AUTHORIZATION")}",
             "Content-Type": "application/json"
         }
         self.data = []
